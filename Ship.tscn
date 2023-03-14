@@ -20,3 +20,5 @@ shape = SubResource( 1 )
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
 path_desired_distance = 10.0
 target_desired_distance = 20.0
+
+[connection signal="input_event" from="." to="." method="_on_Ship_input_event"]

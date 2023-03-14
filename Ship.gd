@@ -15,3 +15,30 @@ func _ready():
 	yield(owner, "ready")
 	
 	get_tree().call_group("Level", "connect_ship_signals", self)
+
+func _on_Ship_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT and event.pressed:
+			emit_signal("ship_clicked_on", self)
+			print("Stop clicking on me! It tickles!")
+
+func _physics_process(delta):
+	if agent.is_navigation_finished():
+		print("I found the treasure! Or maybe not...")
+		target_position = null
+		return
+		
+	if not target_position:
+		return
+		
+	var next_location = agent.get_next_location()
+	var agent_position = global_transform.origin
+	
+	var direction = agent_position.direction_to(next_location)
+	
+	velocity = speed * direction
+	sprite.rotation = velocity.angle() + 90
+	velocity = move_and_slide(velocity)
+	
+		
+	
